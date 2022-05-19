@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CredencialesWeb.Models.Credenciales>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create">Nueva</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Empresa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Producto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Baja)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model != null)
+            {
+                @foreach (var item in Model) 
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Empresa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Usuario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Producto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Baja)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        </td>
+                    </tr>
+                }                
+            }
+        }
+    </tbody>
+</table>

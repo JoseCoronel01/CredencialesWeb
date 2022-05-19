@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CredencialesWeb.Models.Menu>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    if (Model != null)
+    {
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-12">
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            <li><strong>@item.MenuItem</strong>
+                                <ul>
+                                    @{
+                                        if (item.SubMenuItems != null)
+                                        {
+                                            foreach (SubMenu subitem in @item.SubMenuItems)
+                                            {
+                                                <li>
+                                                    <a onclick="OpenUrl(@Html.Raw(subitem.SubItem));">
+                                                        Ver
+                                                    </a>
+                                                </li>                                                
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <iframe id="frame1" src="#" frameborder="0" style="width: 100%; height: 100%"></iframe>
+                </div>
+            </div>
+        </div>        
+    }
+}
+
+<script type="text/javascript">
+    function OpenUrl(url) {
+        document.getElementById('frame1').src = url;
+    }
+</script>
