@@ -1,6 +1,7 @@
 ﻿using CredencialesWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using CredencialesWeb.Services;
 
 namespace CredencialesWeb.Controllers
 {
@@ -15,16 +16,13 @@ namespace CredencialesWeb.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //List<Menu> lista = new List<Menu>();
-            //using (var ctx = new ContextGeneral(_db))
-            //{
-            //    lista.Clear();
-            //    lista.AddRange(await ctx.GetMenu());
-            //}
-
-            return View();
+            List<Menu> lista = new List<Menu>();
+            var ctx = new CredencialesService(_db);
+            lista.Clear();
+            lista.AddRange(await ctx.GetMenu());
+            return View(lista);
         }
 
         public IActionResult Privacy()
