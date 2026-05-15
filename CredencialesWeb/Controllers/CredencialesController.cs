@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CredencialesWeb.Models;
-using CredencialesWeb.Data;
+using CredencialesWeb.Services;
 
 namespace CredencialesWeb.Controllers
 {
@@ -18,11 +18,9 @@ namespace CredencialesWeb.Controllers
             List<Credenciales> lista = new List<Credenciales>();
             try
             {
-                using (var db = new ContextGeneral(_db))
-                {
-                    lista.Clear();
-                    lista = await db.GetCredenciales();
-                }
+                var db = new CredencialesService(_db);
+                lista.Clear();
+                lista = await db.GetCredenciales();                
             }
             catch (Exception ex)
             {
@@ -50,11 +48,9 @@ namespace CredencialesWeb.Controllers
             {
                 try
                 {
-                    using (var db = new ContextGeneral(_db))
-                    {
-                        obj.Id = await db.NuevoIdCredencial();
-                        Exito = await db.NuevaCredencial(obj);
-                    }
+                    var db = new CredencialesService(_db);
+                    obj.Id = await db.NuevoIdCredencial();
+                    Exito = await db.NuevaCredencial(obj);
                 }
                 catch (Exception ex)
                 {
@@ -79,10 +75,9 @@ namespace CredencialesWeb.Controllers
                 return NotFound();
             }
             Credenciales obj = new Credenciales();
-            using (var db = new ContextGeneral(_db))
-            {
-                obj = await db.ObtenerCredencial((int)Id);
-            }
+            var db = new CredencialesService(_db);
+            obj = await db.ObtenerCredencial((int)Id);
+            
             return View(obj);
         }
 
@@ -100,10 +95,8 @@ namespace CredencialesWeb.Controllers
             {
                 try
                 {
-                    using (var db = new ContextGeneral(_db))
-                    {
-                        Exito = await db.EditarCredencial(obj);
-                    }
+                    var db = new CredencialesService(_db);
+                    Exito = await db.EditarCredencial(obj);
                 }
                 catch (Exception ex)
                 {

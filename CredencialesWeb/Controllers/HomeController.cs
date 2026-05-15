@@ -1,7 +1,6 @@
 ﻿using CredencialesWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using CredencialesWeb.Data;
 
 namespace CredencialesWeb.Controllers
 {

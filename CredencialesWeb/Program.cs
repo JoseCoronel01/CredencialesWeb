@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using CredencialesWeb.Data;
 using CredencialesWeb.Models;
+using CredencialesWeb.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ContextGeneral>();
 builder.Services.AddDbContext<CredencialesContext>(options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+builder.Services.AddScoped<CredencialesService>();
 
 var app = builder.Build();
 
