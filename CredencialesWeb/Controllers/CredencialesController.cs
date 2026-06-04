@@ -61,8 +61,6 @@ namespace CredencialesWeb.Controllers
                 }
                 if (Exito > 0)
                     return RedirectToAction("Index");
-                else
-                    return View(new ErrorViewModel() { RequestId = "Ocurrió un error al procesar la solicitud. " + ErrorMessage });
             }
             return View();
         }
@@ -107,8 +105,6 @@ namespace CredencialesWeb.Controllers
                 }
                 if (Exito > 0)
                     return RedirectToAction("Index");
-                else
-                    return View(new ErrorViewModel() { RequestId = "Ocurrío un error al editar el registro. " + ErrorMessage });
             }
             return View();
         }

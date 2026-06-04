@@ -14,14 +14,5 @@ namespace CredencialesWeb.Models
         [StringLength(80)]
         public string? Producto { get; set; }
         public byte? Baja { get; set; }
-
-        public Credenciales()
-        {
-            this.Empresa = "PRUEBA";
-            this.Clave = "PRUEBA";
-            this.Usuario = "PRUEBA";
-            this.Producto = "PRUEBA";
-            this.Baja = 1;
-        }
     }
 }
