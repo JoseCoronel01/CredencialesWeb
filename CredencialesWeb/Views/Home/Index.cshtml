@@ -4,29 +4,96 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    .navbar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+
+    .navbar-menu > li {
+        position: relative;
+    }
+
+    .navbar-menu > li > a {
+        display: block;
+        padding: 12px 20px;
+        text-decoration: none;
+        color: #333;
+        font-weight: 50;
+        transition: background-color 0.3s ease;
+    }
+
+    .navbar-menu > li > a:hover {
+        background-color: #e9ecef;
+    }
+
+    .submenu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        min-width: 200px;
+        display: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .navbar-menu > li:hover .submenu {
+        display: block;
+    }
+
+    .submenu > li {
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .submenu > li:last-child {
+        border-bottom: none;
+    }
+
+    .submenu > li > a {
+        display: block;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #666;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .submenu > li > a:hover {
+        background-color: #f8f9fa;
+        color: #000;
+    }
+</style>
+
 @{
     if (Model != null)
     {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-12">
-                    <ul>
+                    <ul class="navbar-menu">
                         @foreach (var item in Model)
                         {
-                            <li><strong>@item.MenuItem</strong>
-                                <ul>
-                                    @{
-                                        if (item.SubMenuItems != null)
-                                        {
-                                            foreach (SubMenu subitem in @item.SubMenuItems)
+                            <li>
+                                <a href="#">@item.MenuItem</a>
+                                @{
+                                    if (item.SubMenuItems != null && item.SubMenuItems.Any())
+                                    {
+                                        <ul class="submenu">
+                                            @foreach (SubMenu subitem in item.SubMenuItems)
                                             {
                                                 <li>
                                                     <a href="@subitem.SubItem" target="_blank">@subitem.SubItem</a>
-                                                </li>                                                
+                                                </li>
                                             }
-                                        }
+                                        </ul>
                                     }
-                                </ul>
+                                }
                             </li>
                         }
                     </ul>
