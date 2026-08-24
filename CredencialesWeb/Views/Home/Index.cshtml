@@ -5,100 +5,107 @@
 }
 
 <style>
-    .navbar-menu {
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+    }
+
+    .menu-card {
+        background: #fff;
+        border: 1px solid #e0e6ee;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        height: 100%;
+    }
+
+    .menu-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+    }
+
+    .menu-card-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #eef4ff 100%);
+        border-bottom: 1px solid #edf2f7;
+        padding: 1rem 1.25rem;
+    }
+
+    .menu-card-title {
+        margin: 0;
+        color: #1f2937;
+        font-size: 1.05rem;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .menu-links {
         list-style: none;
         padding: 0;
         margin: 0;
-        display: flex;
     }
 
-    .navbar-menu > li {
-        position: relative;
+    .menu-link-item {
+        border-top: 1px solid #f3f4f6;
     }
 
-    .navbar-menu > li > a {
+    .menu-link-item a {
         display: block;
-        padding: 8px;
+        padding: 0.75rem 1rem;
+        color: #3b82f6;
         text-decoration: none;
-        color: #333;
-        font-weight: 50;
-        transition: background-color 0.3s ease;
-    }
-
-    .navbar-menu > li > a:hover {
-        background-color: #e9ecef;
-    }
-
-    .submenu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #fff;
-        border: 1px solid #dee2e6;
-        min-width: 100px;
-        display: none;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        z-index: 1000;
-    }
-
-    .navbar-menu > li:hover .submenu {
-        display: block;
-    }
-
-    .submenu > li {
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    .submenu > li:last-child {
-        border-bottom: none;
-    }
-
-    .submenu > li > a {
-        display: block;
-        padding: 8px;
-        text-decoration: none;
-        color: #666;
         transition: background-color 0.2s ease, color 0.2s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    .submenu > li > a:hover {
-        background-color: #f8f9fa;
-        color: #000;
+    .menu-link-item a:hover {
+        background-color: #f8fbff;
+        color: #1d4ed8;
+    }
+
+    .menu-empty {
+        padding: 1rem;
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.9rem;
     }
 </style>
 
-@{
-    if (Model != null)
-    {
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-12">
-                    <ul class="navbar-menu">
-                        @foreach (var item in Model)
-                        {
-                            <li>
-                                <a href="#">@item.MenuItem</a>
-                                @{
-                                    if (item.SubMenuItems != null && item.SubMenuItems.Any())
+@if (Model != null)
+{
+    <div class="container-fluid py-3">
+        <div class="menu-grid">
+            @foreach (var item in Model)
+            {
+                <article class="menu-card">
+                    <div class="menu-card-header">
+                        <h3 class="menu-card-title">@item.MenuItem</h3>
+                    </div>
+
+                    @if (item.SubMenuItems != null && item.SubMenuItems.Any())
+                    {
+                        <ul class="menu-links">
+                            @foreach (var subitem in item.SubMenuItems)
+                            {
+                                <li class="menu-link-item">
+                                    @if (!string.IsNullOrWhiteSpace(subitem.SubItem))
                                     {
-                                        <ul class="submenu">
-                                            @foreach (SubMenu subitem in item.SubMenuItems)
-                                            {
-                                                <li>
-                                                    <a href="@subitem.SubItem" target="_blank">@subitem.SubItem</a>
-                                                </li>
-                                            }
-                                        </ul>
+                                        <a href="@subitem.SubItem" target="_blank" rel="noopener noreferrer">@subitem.SubItem</a>
                                     }
-                                }
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>        
-    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="menu-empty">Sin opciones disponibles</div>
+                    }
+                </article>
+            }
+        </div>
+    </div>
 }
